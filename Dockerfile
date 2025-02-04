@@ -1,5 +1,5 @@
 # Utiliser l'image PHP 8.2 avec PHP-FPM
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /var/www/html
@@ -9,16 +9,16 @@ RUN apt-get update && apt-get install -y \
     git unzip curl libpq-dev libzip-dev zip libpng-dev libonig-dev \
     && docker-php-ext-install pdo pdo_mysql zip gd
 
-# Installer les outils nécessaires
-RUN apt-get update && apt-get install -y curl
+# Installer Composer
+RUN curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer
 
-# Télécharger Symfony CLI de manière générique, et rendre exécutable
+# Installer Symfony CLI de manière générique, et rendre exécutable
 RUN curl -sS https://get.symfony.com/cli/installer | bash \
     && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony \
     && chmod +x /usr/local/bin/symfony
 
-
-# Assure-toi que le dossier var/ existe avant de modifier ses permissions
+# Assurer que le dossier var/ existe avant de modifier ses permissions
 RUN mkdir -p /var/www/html/var \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 777 /var/www/html/var
