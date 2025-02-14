@@ -1,5 +1,6 @@
 # API
 
+Ne pas oublier de docker exec <container> composer install
 
-
-docker run -d --name oracle-db -p 1521:1521 -p 5500:5500 -e ORACLE_PWD="MotDePasseFort" container-registry.oracle.com/database/free
+pour init timescale
+CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;

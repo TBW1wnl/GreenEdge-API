@@ -26,10 +26,14 @@ services:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: password
       POSTGRES_DB: app
+      POSTGRES_INITDB_ARGS: "--lc-collate=C --lc-ctype=C"
+      POSTGRES_SHARED_PRELOAD_LIBRARIES: "timescaledb"
+    command: ["postgres", "-c", "shared_preload_libraries=timescaledb"]
     volumes:
       - database_data:/var/lib/postgresql/data:rw
     networks:
-      - app_network   
+      - app_network
+ 
 
   adminer:
     image: adminer:latest
