@@ -21,7 +21,7 @@ services:
       - app_network           
 
   database:
-    image: postgres:17
+    image: timescale/timescaledb:latest-pg17
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: password
