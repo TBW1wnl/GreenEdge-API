@@ -39,9 +39,9 @@ This project includes API documentation using OpenAPI (Swagger). To access it, v
 
 http://127.0.0.1:8000/api/docs
 
-Authentication
+## Authentication
 
-This API uses JWT (JSON Web Token) for authentication. To get started:
+This API uses JWT (JSON Web Token) for authentication.
 
 Login and retrieve a token using:
 
@@ -55,7 +55,7 @@ Include the token in your requests as:
 
 Authorization: Bearer {your_token}
 
-Deployment
+## Deployment
 
 For production deployment, follow these steps:
 
@@ -71,16 +71,16 @@ chmod -R 777 var/cache var/log
 
 Use a process manager like Supervisor or PM2 for background tasks
 
-Docker Configuration
+## Docker Configuration
 
 This project includes a Docker setup with the following services:
 
-PHP (FPM) configured with Symfony
+- PHP (FPM) configured with Symfony
 
-Nginx as the web server
+- Nginx as the web server
 
-PostgreSQL as the database
+- PostgreSQL as the database
 
-Adminer for database management
+- Adminer for database management
 
-Mailpit for email testing
+- Mailpit for email testing
