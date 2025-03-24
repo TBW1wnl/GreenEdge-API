@@ -21,14 +21,13 @@ services:
       - app_network           
 
   database:
-    image: timescale/timescaledb:latest-pg17
+    image: postgres:17
+    restart: always
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: password
       POSTGRES_DB: app
       POSTGRES_INITDB_ARGS: "--lc-collate=C --lc-ctype=C"
-      POSTGRES_SHARED_PRELOAD_LIBRARIES: "timescaledb"
-    command: ["postgres", "-c", "shared_preload_libraries=timescaledb"]
     volumes:
       - database_data:/var/lib/postgresql/data:rw
     networks:
