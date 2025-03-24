@@ -28,6 +28,9 @@ class Tile
     #[ORM\JoinColumn(nullable: false)]
     private ?WorldMap $map = null;
 
+    #[ORM\ManyToOne(inversedBy: 'tiles')]
+    private ?Country $country = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +80,18 @@ class Tile
     public function setMap(?WorldMap $map): static
     {
         $this->map = $map;
+
+        return $this;
+    }
+
+    public function getCountry(): ?Country
+    {
+        return $this->country;
+    }
+
+    public function setCountry(?Country $country): static
+    {
+        $this->country = $country;
 
         return $this;
     }
