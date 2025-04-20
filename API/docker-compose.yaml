@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: greenedge
+      POSTGRES_USER: greenuser
+      POSTGRES_PASSWORD: greenpass
+    ports:
+      - "6432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: unless-stopped
+    ports:
+      - "6433:8080"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
