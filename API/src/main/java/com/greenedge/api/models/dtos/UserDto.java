@@ -2,6 +2,8 @@ package com.greenedge.api.models.dtos;
 
 import com.greenedge.api.models.entities.User;
 
+import java.util.List;
+
 public class UserDto {
     private int id;
     private String username;
@@ -9,6 +11,8 @@ public class UserDto {
     private String lastName;
     private String email;
     private String phone;
+
+    private List<TenantDto> tenants;
 
     public UserDto() {
     }
@@ -45,6 +49,13 @@ public class UserDto {
         this.password = password;
     }
 
+    public List<TenantDto> getTenants() {
+        return tenants;
+    }
+
+    public void setTenants(List<TenantDto> tenants) {
+        this.tenants = tenants;
+    }
 
     public int getId() {
         return id;

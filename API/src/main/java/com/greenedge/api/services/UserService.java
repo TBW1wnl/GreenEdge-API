@@ -1,8 +1,12 @@
 package com.greenedge.api.services;
 
+import com.greenedge.api.models.dtos.TenantDto;
 import com.greenedge.api.models.dtos.UserDto;
 import com.greenedge.api.models.entities.User;
 import com.greenedge.api.models.mappers.UserMapper;
+import com.greenedge.api.models.repositories.MemberRepository;
+import com.greenedge.api.models.entities.Member;
+import com.greenedge.api.models.mappers.TenantMapper;
 import com.greenedge.api.models.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,11 +20,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final MemberRepository memberRepository;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, MemberRepository memberRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.memberRepository = memberRepository;
     }
 
     public List<UserDto> getAllUsers() {
@@ -32,9 +38,20 @@ public class UserService {
 
     public UserDto getUserById(int id) {
         return userRepository.findById(id)
-                .map(userMapper::toDto)
+                .map(user -> {
+                    UserDto dto = userMapper.toDto(user);
+
+                    List<TenantDto> tenantDtos = memberRepository.findByUserId(id).stream()
+                            .map(Member::getTenant)
+                            .map(TenantMapper::toDto)
+                            .collect(Collectors.toList());
+
+                    dto.setTenants(tenantDtos);
+                    return dto;
+                })
                 .orElse(null);
     }
+
 
     public UserDto createUser(UserDto dto) {
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
@@ -62,7 +79,6 @@ public class UserService {
             return userMapper.toDto(saved);
         }).orElse(null);
     }
-
 
     public void deleteUser(int id) {
         userRepository.deleteById(id);

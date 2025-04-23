@@ -1,6 +1,10 @@
 package com.greenedge.api.models.entities;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -14,6 +18,14 @@ public class User {
     @Column(unique = true)
     private String email;
     private String phone;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles = new HashSet<>();
+
+
+
+    @OneToMany(mappedBy = "user")
+    private List<Member> memberships;
+
 //    private String address;
 //    private String city;
 //    private String state;
