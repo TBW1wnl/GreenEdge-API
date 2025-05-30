@@ -20,11 +20,10 @@ public class User {
     private String phone;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
-
-
-
     @OneToMany(mappedBy = "user")
     private List<Member> memberships;
+    @OneToMany
+    private List<Game> games;
 
 //    private String address;
 //    private String city;

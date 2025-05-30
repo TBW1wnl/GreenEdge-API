@@ -2,6 +2,8 @@ package com.greenedge.api.models.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "GAMES")
 public class Game {
@@ -18,6 +20,8 @@ public class Game {
     private Short globalWarming;
     @ManyToOne
     private User user;
+    @OneToMany
+    private List<Tile> tiles;
 
     public Game() {}
 
@@ -101,4 +105,11 @@ public class Game {
         this.id = id;
     }
 
+    public List<Tile> getTiles() {
+        return tiles;
+    }
+
+    public void setTiles(List<Tile> tiles) {
+        this.tiles = tiles;
+    }
 }
